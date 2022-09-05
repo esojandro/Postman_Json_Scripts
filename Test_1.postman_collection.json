@@ -1,0 +1,230 @@
+{
+	"info": {
+		"_postman_id": "f7e71648-2dbb-43b0-811d-4b393d9b60eb",
+		"name": "Test_1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23180593"
+	},
+	"item": [
+		{
+			"name": "Adding a user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json()\r",
+							"\r",
+							"pm.collectionVariables.set('userID', jsonData.id)\r",
+							"\r",
+							"// Para comprobar si se tiene la respuesta esperada -> 201 \r",
+							"pm.test('Status code should be 201', function()\r",
+							"{\r",
+							"    pm.response.to.have.status(201)\r",
+							"})\r",
+							"\r",
+							"// Para comprobar que el mail haga match\r",
+							"pm.test('email should match', function(){\r",
+							"    pm.expect(jsonData.email).to.be.eq('elchobylobi21@mail.com')\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Tobias Scott\",\r\n    \"gender\": \"male\",\r\n    \"email\": \"elchobylobi21@mail.com\",\r\n    \"status\": \"active\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Getting a user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code should be 200', function()\r",
+							"{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/{{userID}}",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						"{{userID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Updating a user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code should be 200', function()\r",
+							"{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"const jsonData = pm.response.json()\r",
+							"\r",
+							"// Para comprobar que el estado haga match\r",
+							"pm.test('status should inactive', function(){\r",
+							"    pm.expect(jsonData.status).to.be.eq('inactive')\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Tobias Scott\",\r\n    \"gender\": \"male\",\r\n    \"email\": \"elchobylobi21@mail.com\",\r\n    \"status\": \"inactive\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/{{userID}}",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						"{{userID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Para comprobar si se tiene la respuesta esperada -> 204 \r",
+							"pm.test('Status code should be 204', function()\r",
+							"{\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/{{userID}}",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						"{{userID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "24f8c379f8bfbe71c0b55ea97fb3b09247bac03c4b8211600f4c21eb8bbb950a",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "userID",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
