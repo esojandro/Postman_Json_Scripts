@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "5dadfe70-e6a1-447a-b444-3caaa4342478",
+		"name": "Test_3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23180593"
+	},
+	"item": [
+		{
+			"name": "Get User ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json()\r",
+							"\r",
+							"pm.collectionVariables.set('userID', jsonData.id)\r",
+							"\r",
+							"pm.test('Status code should be 200', function()\r",
+							"{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/me",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a playlist",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.globals.set(\"PlaylistId\", jsonData.id);\r",
+							"\r",
+							"// Para comprobar si se tiene la respuesta esperada -> 201 \r",
+							"pm.test('Status code should be 201', function()\r",
+							"{\r",
+							"    pm.response.to.have.status(201)\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Test Playlist Postman\",\r\n  \"description\": \"New playlist made of Postman CRUD Test\",\r\n  \"public\": true\r\n}"
+				},
+				"url": {
+					"raw": "https://api.spotify.com/v1/{{userID}}/playlists",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"{{userID}}",
+						"playlists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a playlist",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/playlists/{playlist_id}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"playlists",
+						"{playlist_id}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove items",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Updated Playlist Name\",\r\n  \"description\": \"Updated playlist description\",\r\n  \"public\": false\r\n}"
+				},
+				"url": {
+					"raw": "https://api.spotify.com/v1/playlists/{playlist_id}/tracks",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"playlists",
+						"{playlist_id}",
+						"tracks"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "BQBNDTx_bO8SZnkhZIB3vZ_fHF__W3l2fzcRgaQBfzgjXLinqSIYdSKBgNnjxF3cdfkYAnZy7E6wLM_9P_n8mutxGlgf3b0J-yICqM326Jlb7O3HowCjAn0T9ErD-AXXsDI5Z47Fyp08GiT8iXppVKZgiLf4_0T8k5jrcPXZDoqyUHa43tr7_xAPtD_o5n9rJAfbbK37C9b6",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "userID",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
